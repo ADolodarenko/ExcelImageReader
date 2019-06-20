@@ -1,29 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
+using ExcelImageReader.Service;
 
 namespace ExcelImageReader.Model
 {
     public class DataProcessor
     {
-        private const string MESSAGE_IMAGE_PATTERN = "Image Index={0}, Name={1), Extension={2}: ";
-        private const string MESSAGE_RESULT_PATTERN = "{0}: {1}";
-        private const string MESSAGE_OK = "Successfully written.";
+        private const string MESSAGE_LOG_NULL = "A method for adding to log must be specified.";
+        private const string MESSAGE_IMAGE_PATTERN = "Image Index={0}, Name={1}, Extension={2}";
+        private const string MESSAGE_RESULT_PATTERN = "{0}: {1}.";
+        private const string MESSAGE_OK = "Successfully written";
+        private const string LOG_FILE_NAME = "excelimagereader_log.txt";
 
-        private List<string> logLines;
-        ExcelFileSource fileSource;
-        ImageWriter imageWriter;
+        private Utils.AddToLogDelegate addToLogList;
+        private ExcelFileSource fileSource;
+        private ImageWriter imageWriter;
+        private LogFileWriter logWriter;
 
-        public DataProcessor(string sourceFileName, string destFolderPath)
+        public DataProcessor(string sourceFileName, int imageNameColumn, string destFolderPath, string imageNameExtension, Utils.AddToLogDelegate addToLogList)
         {
-            logLines = new List<string>();
+            this.addToLogList = addToLogList ?? throw new Exception(MESSAGE_LOG_NULL);
 
-            fileSource = new ExcelFileSource(sourceFileName);
+            fileSource = new ExcelFileSource(sourceFileName, imageNameColumn, imageNameExtension);
             imageWriter = new ImageWriter(destFolderPath);
+            logWriter = new LogFileWriter(Path.Combine(destFolderPath, LOG_FILE_NAME));
         }
 
         public void Process()
         {
-            if (fileSource != null)
+            if (fileSource != null && logWriter != null)
             {
                 fileSource.Open();
 
@@ -46,16 +51,13 @@ namespace ExcelImageReader.Model
                         message = string.Format(MESSAGE_RESULT_PATTERN, message, e.ToString());
                     }
 
-                    logLines.Add(message);
+                    logWriter.WriteLine(message);
+                    addToLogList(message);
                 }
 
                 fileSource.Close();
+                logWriter.Close();
             }
-        }
-
-        public List<string> GetLogLines()
-        {
-            return logLines;
         }
     }
 }

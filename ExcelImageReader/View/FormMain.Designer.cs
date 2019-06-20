@@ -34,10 +34,15 @@
             this.textBoxSourceFile = new System.Windows.Forms.TextBox();
             this.groupBoxControls = new System.Windows.Forms.GroupBox();
             this.buttonUpload = new System.Windows.Forms.Button();
-            this.textBoxLog = new System.Windows.Forms.TextBox();
             this.openSourceFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.destFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.labelImageNameColumn = new System.Windows.Forms.Label();
+            this.labelImageFileExtension = new System.Windows.Forms.Label();
+            this.numUpDownImageNameColumn = new System.Windows.Forms.NumericUpDown();
+            this.textBoxImageFileExtension = new System.Windows.Forms.TextBox();
+            this.listBoxLog = new System.Windows.Forms.ListBox();
             this.groupBoxControls.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownImageNameColumn)).BeginInit();
             this.SuspendLayout();
             // 
             // labelSourceFile
@@ -60,28 +65,32 @@
             // 
             // textBoxDestFolder
             // 
-            this.textBoxDestFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxDestFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDestFolder.Location = new System.Drawing.Point(119, 56);
             this.textBoxDestFolder.Name = "textBoxDestFolder";
-            this.textBoxDestFolder.Size = new System.Drawing.Size(552, 20);
+            this.textBoxDestFolder.Size = new System.Drawing.Size(363, 20);
             this.textBoxDestFolder.TabIndex = 2;
             this.textBoxDestFolder.Resize += new System.EventHandler(this.textBox_Resize);
             // 
             // textBoxSourceFile
             // 
-            this.textBoxSourceFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxSourceFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSourceFile.Location = new System.Drawing.Point(119, 24);
             this.textBoxSourceFile.Name = "textBoxSourceFile";
-            this.textBoxSourceFile.Size = new System.Drawing.Size(552, 20);
+            this.textBoxSourceFile.Size = new System.Drawing.Size(363, 20);
             this.textBoxSourceFile.TabIndex = 1;
             this.textBoxSourceFile.Resize += new System.EventHandler(this.textBox_Resize);
             // 
             // groupBoxControls
             // 
-            this.groupBoxControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxControls.Controls.Add(this.textBoxImageFileExtension);
+            this.groupBoxControls.Controls.Add(this.numUpDownImageNameColumn);
+            this.groupBoxControls.Controls.Add(this.labelImageFileExtension);
+            this.groupBoxControls.Controls.Add(this.labelImageNameColumn);
             this.groupBoxControls.Controls.Add(this.buttonUpload);
             this.groupBoxControls.Controls.Add(this.labelSourceFile);
             this.groupBoxControls.Controls.Add(this.textBoxDestFolder);
@@ -104,31 +113,65 @@
             this.buttonUpload.UseVisualStyleBackColor = true;
             this.buttonUpload.Click += new System.EventHandler(this.buttonUpload_Click);
             // 
-            // textBoxLog
-            // 
-            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLog.Location = new System.Drawing.Point(5, 105);
-            this.textBoxLog.Multiline = true;
-            this.textBoxLog.Name = "textBoxLog";
-            this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxLog.Size = new System.Drawing.Size(783, 333);
-            this.textBoxLog.TabIndex = 0;
-            this.textBoxLog.TabStop = false;
-            this.textBoxLog.WordWrap = false;
-            // 
             // openSourceFileDialog
             // 
-            this.openSourceFileDialog.Filter = "XLS files|*.xls|XLSX files|*.xlsx";
+            this.openSourceFileDialog.Filter = "XLSX files|*.xlsx";
             this.openSourceFileDialog.InitialDirectory = ".";
+            // 
+            // labelImageNameColumn
+            // 
+            this.labelImageNameColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelImageNameColumn.AutoSize = true;
+            this.labelImageNameColumn.Location = new System.Drawing.Point(510, 27);
+            this.labelImageNameColumn.Name = "labelImageNameColumn";
+            this.labelImageNameColumn.Size = new System.Drawing.Size(102, 13);
+            this.labelImageNameColumn.TabIndex = 4;
+            this.labelImageNameColumn.Text = "Image name column";
+            // 
+            // labelImageFileExtension
+            // 
+            this.labelImageFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelImageFileExtension.AutoSize = true;
+            this.labelImageFileExtension.Location = new System.Drawing.Point(510, 59);
+            this.labelImageFileExtension.Name = "labelImageFileExtension";
+            this.labelImageFileExtension.Size = new System.Drawing.Size(100, 13);
+            this.labelImageFileExtension.TabIndex = 4;
+            this.labelImageFileExtension.Text = "Image file extension";
+            // 
+            // numUpDownImageNameColumn
+            // 
+            this.numUpDownImageNameColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numUpDownImageNameColumn.Location = new System.Drawing.Point(618, 25);
+            this.numUpDownImageNameColumn.Name = "numUpDownImageNameColumn";
+            this.numUpDownImageNameColumn.Size = new System.Drawing.Size(49, 20);
+            this.numUpDownImageNameColumn.TabIndex = 5;
+            // 
+            // textBoxImageFileExtension
+            // 
+            this.textBoxImageFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxImageFileExtension.Location = new System.Drawing.Point(618, 56);
+            this.textBoxImageFileExtension.Name = "textBoxImageFileExtension";
+            this.textBoxImageFileExtension.Size = new System.Drawing.Size(49, 20);
+            this.textBoxImageFileExtension.TabIndex = 6;
+            // 
+            // listBoxLog
+            // 
+            this.listBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxLog.FormattingEnabled = true;
+            this.listBoxLog.Location = new System.Drawing.Point(5, 105);
+            this.listBoxLog.Name = "listBoxLog";
+            this.listBoxLog.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxLog.Size = new System.Drawing.Size(783, 342);
+            this.listBoxLog.TabIndex = 6;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(794, 450);
-            this.Controls.Add(this.textBoxLog);
+            this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBoxControls);
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "FormMain";
@@ -136,8 +179,8 @@
             this.Text = "Excel Image Reader";
             this.groupBoxControls.ResumeLayout(false);
             this.groupBoxControls.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDownImageNameColumn)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -149,9 +192,13 @@
         private System.Windows.Forms.TextBox textBoxSourceFile;
         private System.Windows.Forms.GroupBox groupBoxControls;
         private System.Windows.Forms.Button buttonUpload;
-        private System.Windows.Forms.TextBox textBoxLog;
         private System.Windows.Forms.OpenFileDialog openSourceFileDialog;
         private System.Windows.Forms.FolderBrowserDialog destFolderBrowserDialog;
+        private System.Windows.Forms.Label labelImageFileExtension;
+        private System.Windows.Forms.Label labelImageNameColumn;
+        private System.Windows.Forms.NumericUpDown numUpDownImageNameColumn;
+        private System.Windows.Forms.TextBox textBoxImageFileExtension;
+        private System.Windows.Forms.ListBox listBoxLog;
     }
 }
 

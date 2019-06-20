@@ -55,6 +55,8 @@
     <Compile Include="Model\ImageData.cs" />
     <Compile Include="Model\ExcelFileSource.cs" />
     <Compile Include="Model\ImageWriter.cs" />
+    <Compile Include="Service\LogFileWriter.cs" />
+    <Compile Include="Service\Utils.cs" />
     <Compile Include="View\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

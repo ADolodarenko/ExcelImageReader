@@ -20,11 +20,18 @@ namespace ExcelImageReader.View
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            DataProcessor dataProcessor = new DataProcessor(textBoxSourceFile.Text, textBoxDestFolder.Text);
+            DataProcessor dataProcessor = new DataProcessor(textBoxSourceFile.Text, (int)numUpDownImageNameColumn.Value,
+                textBoxDestFolder.Text, textBoxImageFileExtension.Text,
+                AddToLogList);
 
             dataProcessor.Process();
+        }
 
-            textBoxLog.Lines = dataProcessor.GetLogLines().ToArray();
+        private void AddToLogList(string message)
+        {
+            listBoxLog.Items.Add(message);
+            listBoxLog.SelectedIndex = listBoxLog.Items.Count - 1;
+            listBoxLog.SelectedIndex = -1;
         }
 
         private void SetupComponent()
