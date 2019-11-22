@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ExcelImageReader.Model;
@@ -20,7 +21,9 @@ namespace ExcelImageReader.View
 
         private void buttonUpload_Click(object sender, EventArgs e)
         {
-            DataProcessor dataProcessor = new DataProcessor(textBoxSourceFile.Text, (int)numUpDownImageNameColumn.Value,
+            DataProcessor dataProcessor = new DataProcessor(
+                (ImageSourceType) comboImageSourceType.SelectedItem, textBoxSourceFile.Text,
+                (int) numUpDownImageNameColumn.Value, (int) numUpDownImageURLColumn.Value,
                 textBoxDestFolder.Text, textBoxImageFileExtension.Text,
                 AddToLogList);
 
@@ -38,6 +41,8 @@ namespace ExcelImageReader.View
         {
             SetMainTitle(AppService.APP_TITLE, true, false);
 
+            InitImageSourceTypesCombo();
+
             InitSourceFileButton();
             InitDestFolderButton();
         }
@@ -51,6 +56,11 @@ namespace ExcelImageReader.View
 
             if (withBuildDate)
                 this.Text += (" (" + AppService.GetBuildDate().ToString() + ")");
+        }
+
+        private void InitImageSourceTypesCombo()
+        {
+            comboImageSourceType.DataSource = Enum.GetValues(typeof(ImageSourceType));
         }
 
         private void InitSourceFileButton()

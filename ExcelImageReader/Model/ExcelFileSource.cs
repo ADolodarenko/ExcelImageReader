@@ -11,16 +11,19 @@ namespace ExcelImageReader.Model
 
         private string fileName;
         private int imageNameColumn;
+        private int urlColumn;
         private string imageExtension;
 
         private ExcelPackage package;
         private ExcelWorksheet sheet;
         private int drawingIndex;
+        private int currentRow;
 
-        public ExcelFileSource(string fileName, int imageNameColumn, string imageExtension)
+        public ExcelFileSource(string fileName, int imageNameColumn, int urlColumn, string imageExtension)
         {
             this.fileName = fileName;
             this.imageNameColumn = imageNameColumn;
+            this.urlColumn = urlColumn;
             this.imageExtension = imageExtension;
         }
 
@@ -33,6 +36,7 @@ namespace ExcelImageReader.Model
                 package = new ExcelPackage(fileInfo);
                 sheet = package.Workbook.Worksheets[1];
                 drawingIndex = 0;
+                currentRow = sheet.Dimension.Start.Row;
             }
             else
                 throw new Exception(string.Format(EX_PATTERN_FILE_NOT_EXISTS, fileName));
@@ -57,6 +61,27 @@ namespace ExcelImageReader.Model
                 return null;
         }
 
+        public ImageLocators GetNextImageLocators()
+        {
+            if (currentRow <= sheet.Dimension.End.Row)
+            {
+                string url = GetCellText(currentRow, urlColumn);
+                string name = GetCellText(currentRow, imageNameColumn);
+                string extension = this.imageExtension;
+                                
+                string existingExt = Path.GetExtension(url);
+
+                if ( !String.IsNullOrWhiteSpace(existingExt) )
+                    extension = existingExt.Substring(1);
+                
+                currentRow++;
+
+                return new ImageLocators(url, name, extension);
+            }
+            else
+                return null;
+        }
+
         public void Close()
         {
             if (package != null)
@@ -65,6 +90,22 @@ namespace ExcelImageReader.Model
 
                 package = null;
             }
+        }
+
+        private string GetCellText(int row, int column)
+        {
+            string value;
+
+            try
+            {
+                value = sheet.GetValue<string>(row, column);
+            }
+            catch (Exception e)
+            {
+                value = sheet.Cells[row, column].Text;
+            }
+
+            return value;
         }
     }
 }
